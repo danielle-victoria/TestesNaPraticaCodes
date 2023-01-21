@@ -1,6 +1,8 @@
 body{
     background-color: beige;
     font-family: Verdana;
+    max-width: 900px;
+    margin: auto;
 }
 #title, .subtitle, .post_title{
     color: rgb(38, 38, 49);
@@ -42,11 +44,13 @@ a{
     margin: 0;
     margin-bottom: 15px;
     text-transform: capitalize;
+    text-align: justify;
 
 }
 
 .post_image{
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .contacts_list{
