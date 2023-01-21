@@ -2,17 +2,38 @@ body{
     background-color: beige;
 }
 #title, .subtitle, .post_title{
-    color: blue;
+    color: rgb(38, 38, 49);
+}
+
+.photo{
+    border: 3px solid rgb(67, 58, 58);
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
 }
 
 .post_title{
     font-size: 16px;
     font-style: italic;
+    margin: 0;
+    margin-bottom: 15px;
 } 
 
 .post{
     background-color: white;
-    padding: 10px;
-    border: 3px solid black;
-    margin: 10px;
+    padding: 15px;
+    border: 3px solid rgb(67, 58, 58);
+    margin-bottom: 15px;
+    border-radius: 5px;
 }
+
+.post_content{
+    margin: 0;
+    margin-bottom: 15px;
+
+}
+
+.post_image{
+    margin-bottom: 15px;
+}
+
