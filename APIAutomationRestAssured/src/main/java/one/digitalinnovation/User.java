@@ -1,4 +1,4 @@
-package one.digitalinnovation.Entities;
+package one.digitalinnovation;
 
 public class User {
     
@@ -23,7 +23,7 @@ public class User {
         return username;
     }
 
-    public void set(String username){
+    public void setUsername(String username){
         this.username = username;
     }
 
