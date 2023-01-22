@@ -21,11 +21,11 @@ import static org.hamcrest.Matchers.*;
 public class UserTests {
 
     private static User user;
-    public Faker faker;
+    public static Faker faker;
     public static RequestSpecification request;
 
     @BeforeAll
-    public void setup(){
+    public static void setup(){
         RestAssured.baseURI = "https://petstore.swagger.io/v2";
 
         faker = new Faker();
@@ -48,7 +48,19 @@ public class UserTests {
 
     @Test
     public void CreateNewUser_WithValidData_ReturnOk(){
-        
+
+        request
+                .body(user)
+                .when()
+                .post("/user")
+                .then()
+                .assertThat().statusCode(200).and()
+                .body("code", equalTo(200))
+                .body("type", equalTo("unknown"))
+                .body("message", isA(String.class))
+                .body("size()", equalTo(3));
+
+
     }
 }
     
