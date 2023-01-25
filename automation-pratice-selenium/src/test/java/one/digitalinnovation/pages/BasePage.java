@@ -3,9 +3,21 @@ package one.digitalinnovation.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
+
+import javafx.scene.control.Alert;
+
+import java.time.Duration;
+import java.util.*;
+
 
 
 public abstract class BasePage {
@@ -13,6 +25,9 @@ public abstract class BasePage {
     private WebDriver driver;
     private Actions action;
     private WebElement findElement;
+    private WebDriverWait wait;
+    private Select select;
+    
 
     BasePage(){
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
@@ -72,5 +87,53 @@ public abstract class BasePage {
         WebElement element = this.driver.findElement(locator);
         action.moveToElement(element).click().build().perform();
     }
+
+    /*public void PermissionPopups(){
+        //WebDriverManager.chromedriver().setUp();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-notifications");
+        driver.get("https://noracora.com/account/login");
+
+        String janelaAtual = driver.getWindowHandle();
+        Set<String> janelas = driver.getWindowHandles();
+
+        for (String janela : janelas) {
+            driver.switchTo().window(janela);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("disable-notifications");
+            //driver.get("https://noracora.com/account/login");
+           
+        }
+            }*/
+
+    public String getTextByAttribute(By locator, String attributeName){
+        return this.driver.findElement(locator).getAttribute(attributeName);
+    }
+
+    public WebElement waitVisibilityOfElementLocated(By locator, Duration time){
+        wait = new WebDriverWait(driver, time);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+    
+    
+    public WebElement waitVisibilityOfElementLocated(By locator){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public Boolean isContainedInPageSource(String message){
+        return driver.getPageSource().contains(message);
+    }
+
+    public void SelectByValue(By locator, String value) {
+        select = new Select(findElement(locator));
+        select.selectByValue(value);
+    }
+
+    public void clear(By locator){
+        this.driver.findElement(locator).clear();
+        
+    }
+    
     
 }
