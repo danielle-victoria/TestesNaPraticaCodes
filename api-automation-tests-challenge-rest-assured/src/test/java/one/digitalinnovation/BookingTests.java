@@ -11,6 +11,8 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import javafx.application.Application;
+
 import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
@@ -52,13 +54,14 @@ public class BookingTests {
     }
 
     @Test
+    @Order(1)
     public void getAllBookingsById_returnOk(){
             Response response = request
                                     .when()
-                                        .get("/booking")
+                                    .get("/booking")
                                     .then()
-                                        .extract()
-                                        .response();
+                                    .extract()
+                                    .response();
 
 
         Assertions.assertNotNull(response);
@@ -66,6 +69,7 @@ public class BookingTests {
     }
 
     @Test
+    @Order(2)
     public void  getAllBookingsByUserFirstName_BookingExists_returnOk(){
                     request
                         .when()
@@ -81,6 +85,7 @@ public class BookingTests {
     }
 
     @Test
+    @Order(3)
     public void  CreateBooking_WithValidData_returnOk(){
 
         Booking test = booking;
@@ -98,6 +103,35 @@ public class BookingTests {
 
 
 
+    }
+
+    @Test
+    @Order(4)
+    public void UpdateBooking_return403(){
+        given().config(RestAssured.config().logConfig(logConfig().enableLoggingOfRequestAndResponseIfValidationFails()))
+                    .contentType(ContentType.JSON)
+                        .when()
+                        .body(booking)
+                        .put("/booking/1")
+                        .then()
+                        .assertThat()
+                        .statusCode(403)
+                        .and().time(lessThan(2000L));
+
+
+    }
+
+    @Test
+    @Order(5) 
+    public void DeleteBooking_retun403(){
+        given().config(RestAssured.config().logConfig(logConfig().enableLoggingOfRequestAndResponseIfValidationFails()))
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .delete("/booking/1")
+                    .then()
+                    .assertThat().statusCode(403)
+                    .and().time(lessThan(2000L));
+        
     }
 
 }
